@@ -23,8 +23,5 @@ Mini project for **Metode Optimasi Metaheuristik (SD234503)**. Students use Gene
 
 ## Optimization model
 
-Maximize `w.T @ mu - lambda_ * (w.T @ Sigma @ w)`, subject to `sum(w) = 1` and `0 <= w_i <= 1`. The starter configuration uses `lambda = 3` and annualized return/covariance estimates. The project compares GA and PSO with an equal-weight baseline.
+Maximize `w.T @ mu - lambda_ * (w.T @ Sigma @ w)`, subject to `sum(w) = 1` and `0 <= w_i <= 1`. The starter configuration uses `lambda = 3` and annualised return/covariance estimates. The project compares GA and PSO with an equal-weight baseline.
 
-## Notes for instructors
-
-The notebook is a **student template**, not a complete solution. Consider publishing answer keys in a separate private repository. The example asset labels are educational placeholders.
