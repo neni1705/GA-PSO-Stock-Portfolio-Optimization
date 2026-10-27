@@ -130,13 +130,90 @@ pbest_scores = np.array([fitness(z) for z in x])
 gbest = float(pbest[np.argmax(pbest_scores)])
 ```
 
-## Step 8 — Update velocity and position iteratively
 
-$$v_i^{t+1}=\omega v_i^t+c_1r_1(pbest_i-x_i^t)+c_2r_2(gbest-x_i^t)$$
+## Step 8 — Update Velocity and Position Iteratively
 
-$$x_i^{t+1}=\operatorname{clip}(x_i^t+v_i^{t+1},0,1)$$
+At each iteration, particles update their velocities based on three components: inertia, cognitive influence, and social influence.
 
-Use $\omega=0.7$, $c_1=c_2=1.5$, and 60 iterations. **Run the linked notebook** for the full PSO loop including updates to personal best and global best.
+### 1. Velocity Update
+
+$$
+v_i^{t+1} = \omega v_i^t
++ c_1 r_1 (pbest_i - x_i^t)
++ c_2 r_2 (gbest - x_i^t)
+$$
+
+where:
+
+- $v_i^t$: Current velocity of particle $i$.
+- $x_i^t$: Current position of particle $i$.
+- $\omega$: Inertia weight.
+- $c_1$: Cognitive coefficient.
+- $c_2$: Social coefficient.
+- $r_1, r_2$: Random values between 0 and 1.
+- $pbest_i$: Best position previously found by particle $i$.
+- $gbest$: Best position found by the entire swarm.
+
+### 2. Position Update
+
+After updating the velocity, calculate the new position:
+
+$$
+x_i^{t+1} = x_i^t + v_i^{t+1}
+$$
+
+Since the portfolio weight must remain between 0 and 1,
+apply a clipping operation:
+
+$$
+x_i^{t+1} = \min\left(1,\max\left(0,x_i^t+v_i^{t+1}\right)\right)
+$$
+
+This ensures that:
+
+$$
+0 \leq x_i^{t+1} \leq 1
+$$
+
+### 3. PSO Parameters
+
+For this hands-on exercise, use:
+
+| Parameter | Value |
+|---|---|
+| Inertia weight ($\omega$) | 0.7 |
+| Cognitive coefficient ($c_1$) | 1.5 |
+| Social coefficient ($c_2$) | 1.5 |
+| Number of iterations | 60 |
+
+### 4. Python Implementation
+
+```python
+# Update velocity
+r1 = np.random.rand(n_particles)
+r2 = np.random.rand(n_particles)
+
+velocity = (
+    0.7 * velocity
+    + 1.5 * r1 * (pbest - position)
+    + 1.5 * r2 * (gbest - position)
+)
+
+# Update position
+position = np.clip(position + velocity, 0, 1)
+```
+
+### 5. Update Personal Best and Global Best
+
+After updating the positions:
+
+1. Evaluate the fitness of each particle.
+2. Update personal best if the new fitness is better.
+3. Update global best if any particle finds a better solution.
+4. Repeat until 60 iterations are completed.
+
+**Run the linked notebook** for the complete PSO implementation.
+
 
 ## Step 9 — Interpret results
 
