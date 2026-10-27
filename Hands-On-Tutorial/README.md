@@ -49,7 +49,7 @@ $$r_{i,t}=\frac{P_{i,t}}{P_{i,t-1}}-1$$
 
 Annualized estimates, assuming 252 trading days:
 
-$$\boldsymbol{\mu}=252\,\overline{\mathbf r},\qquad \Sigma=252\,\operatorname{Cov}(\mathbf r)$$
+$$ \boldsymbol{\mu}=252\,\overline{\mathbf r},\qquad \Sigma=252\,\operatorname{Cov}(\mathbf r)$$
 
 ```python
 returns = prices.pct_change().dropna()
