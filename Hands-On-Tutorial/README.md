@@ -137,11 +137,17 @@ At each iteration, particles update their velocities based on three components: 
 
 ### 1. Velocity Update
 
+At each iteration, the velocity of particle $i$ is updated as follows:
+
 $$
-v_i^{t+1} = \omega v_i^t
-+ c_1 r_1 (pbest_i - x_i^t)
-+ c_2 r_2 (gbest - x_i^t)
+v_i^{t+1} = \omega v_i^t + c_1 r_1 (p_{best,i} - x_i^t) + c_2 r_2 (g_{best} - x_i^t)
 $$
+
+The velocity update consists of three components:
+
+- **Inertia:** $\omega v_i^t$
+- **Cognitive component:** $c_1 r_1 (p_{best,i} - x_i^t)$
+- **Social component:** $c_2 r_2 (g_{best} - x_i^t)$
 
 where:
 
@@ -150,9 +156,9 @@ where:
 - $\omega$: Inertia weight.
 - $c_1$: Cognitive coefficient.
 - $c_2$: Social coefficient.
-- $r_1, r_2$: Random values between 0 and 1.
-- $pbest_i$: Best position previously found by particle $i$.
-- $gbest$: Best position found by the entire swarm.
+- $r_1, r_2$: Random numbers between 0 and 1.
+- $p_{best,i}$: Personal best position of particle $i$.
+- $g_{best}$: Global best position of the swarm.
 
 ### 2. Position Update
 
