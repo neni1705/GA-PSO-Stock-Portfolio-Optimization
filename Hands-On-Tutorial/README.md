@@ -41,20 +41,57 @@ print(prices.head())
 
 Use the **same trading dates** for both stocks. If no data are returned, check network access and the provider's availability. The `end` date is exclusive.
 
-## Step 4 — Estimate return and risk
+## Step 4 — Estimate Return and Risk
 
 Daily simple returns:
 
-$$r_{i,t}=\frac{P_{i,t}}{P_{i,t-1}}-1$$
+$$
+r_{i,t} = \frac{P_{i,t}}{P_{i,t-1}} - 1
+$$
 
-Annualized estimates, assuming 252 trading days:
+where:
+- $P_{i,t}$ is the adjusted closing price of stock $i$ at time $t$.
+- $r_{i,t}$ is the daily return of stock $i$.
 
-$$\boldsymbol{\mu}=252\,\overline{\mathbf r},\qquad \Sigma=252\,\operatorname{Cov}(\mathbf r)$$
+### Annualized Expected Return
+
+Assuming 252 trading days per year:
+
+$$
+\boldsymbol{\mu} = 252 \times \overline{\mathbf{r}}
+$$
+
+where:
+- $\boldsymbol{\mu}$ is the vector of annualized expected returns.
+- $\overline{\mathbf{r}}$ is the vector of average daily returns.
+
+### Annualized Covariance Matrix
+
+$$
+\Sigma = 252 \times \mathrm{Cov}(\mathbf{r})
+$$
+
+where:
+- $\Sigma$ is the annualized covariance matrix.
+- $\mathrm{Cov}(\mathbf{r})$ is the covariance matrix of daily stock returns.
+
+### Python Implementation
 
 ```python
+# Calculate daily returns
 returns = prices.pct_change().dropna()
+
+# Annualized expected returns
 mu = 252 * returns.mean().to_numpy()
+
+# Annualized covariance matrix
 Sigma = 252 * returns.cov().to_numpy()
+
+print("Annualized Expected Returns:")
+print(mu)
+
+print("\nAnnualized Covariance Matrix:")
+print(Sigma)
 ```
 
 ## Step 5 — Define the decision variable
